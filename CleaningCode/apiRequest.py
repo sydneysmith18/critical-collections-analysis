@@ -35,6 +35,7 @@ def createRow( OCLC , api_response ):
     empty spot in the array. '''
     # parse api_response
     record = MARCXMLRecord(api_response.text.encode('UTF-8'))
+    #print(record)
 
     row = [OCLC] #i nitialize list with just OCLC number
     row.append(record.get_name()) # add title
@@ -42,6 +43,7 @@ def createRow( OCLC , api_response ):
     # returned as an array
     row.append(record.get_pub_date()) # add publishing date
     row.append(record.get_publisher()) # add publisher
+    row.append(record.get_subfields("520", "a", i1=" ", i2=" ", exception=False))
     return row
 
 def main():
@@ -84,6 +86,7 @@ def main():
     input_file.close()
     output_file.close()
     rejects_file.close()
+ 
 
 def test_parsing_calls():
     ''' This function shows an example of what each highlevel getter returns
